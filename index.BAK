@@ -6,8 +6,8 @@
     // service workerが有効なら、service-worker.js を登録します
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('./service-worker.js').then(registration => {
-        registration.onupdatefound = function() {
         window.alert('Service Worker Registered');
+        registration.onupdatefound = function() {
         registration.update();
        }
      });
