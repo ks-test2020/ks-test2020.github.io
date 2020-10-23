@@ -14,12 +14,6 @@
       display: block;
     }
   </style>
-  <script>
-    // service worker‚ª—LŒø‚È‚çAservice-worker.js ‚ğ“o˜^‚µ‚Ü‚·
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('./service-worker.js').then(function() { window.alert('Service Worker Registered'); });
-   }
-  </script>
 </head>
 <body>
   <h1>p.html</h1>
