@@ -10,9 +10,9 @@
         "sizes": "512x512",
         "type": "image/png"
     }],
-    "start_url": "./utm_source=homescreen",
+    "start_url": "./",
     "display": "standalone",
-    "orientation"       : "portrait",
+    "orientation": "portrait",
     "background_color": "#FFFFFF",
     "theme_color": "#FFFFFF"
 }
