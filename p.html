@@ -18,7 +18,8 @@
     // service worker‚ª—LŒø‚È‚çAservice-worker.js ‚ð“o˜^‚µ‚Ü‚·
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('./service-worker.js').then(registration => {
-        function() { window.alert('Service Worker Registered');
+        registration.onupdatefound = function() {
+        window.alert('Service Worker Registered');
         registration.update();
        }
      });
