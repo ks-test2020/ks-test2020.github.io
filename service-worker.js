@@ -89,7 +89,7 @@ self.addEventListener('fetch', function(event) {
                                                 });
                                         });
                                 } else {
-                                    return event.respondWith(new Response('200以外のエラーをハンドリングしたりできる'));
+                                    return event.respondWith(new Response('200以外のエラー'));
                                 }
                                 return response;
                             }
@@ -108,7 +108,7 @@ self.addEventListener('fetch', function(event) {
                     return response;
                 }
                 //オフラインでキャッシュもなかったパターン
-                return caches.match("offline.html")
+                return caches.match("p.html")
                     .then(function(responseNodata) {
                         return responseNodata;
                     });
