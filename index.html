@@ -7,9 +7,9 @@
   <!-- manifest.jsonを呼び出しています -->
   <link rel="manifest" href="./manifest.json">
   <script>
-    // service workerが有効なら、firebase-messaging-sw.js を登録します
+    // service workerが有効なら、service-worker.js を登録します
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('./firebase-messaging-sw.js').then(registration => {
+      navigator.serviceWorker.register('./service-worker.js').then(registration => {
         window.alert('Service Worker Registered');
         registration.onupdatefound = function() {
         registration.update();
