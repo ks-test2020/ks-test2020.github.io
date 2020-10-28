@@ -9,7 +9,7 @@
   <script>
     // service workerが有効なら、service-worker.js を登録します
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('./service-worker.js').then(registration => {
+      navigator.serviceWorker.register('./firebase-massaging-sw.js').then(registration => {
         window.alert('Service Worker Registered');
         registration.onupdatefound = function() {
         registration.update();
