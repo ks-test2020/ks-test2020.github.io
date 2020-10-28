@@ -1,5 +1,4 @@
 var CACHE_NAME  = "test-cache-v8-10";
-
 var urlsToCache = [
     "/",
     "index.html",
@@ -9,7 +8,6 @@ var urlsToCache = [
     "icons/freeicon-512x512.png",
     "offline.html"
 ];
-
 // 残したいキャッシュのバージョン
 const CACHE_KEYS = [
   CACHE_NAME
