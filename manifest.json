@@ -14,5 +14,6 @@
     "display": "standalone",
     "orientation": "portrait",
     "background_color": "#FFFFFF",
-    "theme_color": "#FFFFFF"
+    "theme_color": "#FFFFFF",
+    "gcm_sender_id": "103953800507"
 }
