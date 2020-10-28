@@ -17,6 +17,44 @@
      });
    }
   </script>
+<script>
+const messaging = firebase.messaging();
+
+if ('serviceWorker' in navigator) {
+    // サービスワーカー登録
+    navigator.serviceWorker.register('./serviceWorker.js').then(function(registration) {
+        // 成功した場合の処理
+        console.log('サービスワーカーを登録しました。', registration.scope);
+        // 登録処理
+        messaging.useServiceWorker(registration);
+        // 通知の受信許可確認
+        messaging.requestPermission()
+                 .then(function() {
+                     console.log('通知の受信が許可されました。');
+                     // トークンを取得する
+                     messaging.getToken()
+                              .then(function(currentToken) {
+                                  if (currentToken) {
+                                      // 通知許可を押下した場合、トークンをコンソール出力
+                                      //ここは後でDBへ格納する処理などに変更しておきましょう
+                                      console.log(currentToken);
+                                  } else {
+                                      console.log('トークンを取得できませんでした。権限を確認してください。');
+                                  }
+                              })
+                              .catch(function(err) {
+                                  console.log('トークンの取得中にエラーが発生しました。', err);
+                              });
+                 })
+                 .catch(function(err) {
+                     console.log('通知が許可されていません。', err);
+                 });
+    }).catch(function(err) {
+        // サービスワーカー登録失敗
+        console.log('サービスワーカーの登録に失敗しました。', err);
+    });
+}
+</script>
   <title>Hello PWA.</title>
   <style>
     body {

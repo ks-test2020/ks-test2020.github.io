@@ -112,26 +112,11 @@ self.addEventListener('fetch', function(event) {
         );
     }
 });
- self.addEventListener('push', (event) => {
-    const options = {
-        body: 'This notification was generated from a push!',
-        icon: '',
-        data: {
-            dateOfArrival: Date.now(),
-            primaryKey: '2'
-        },
-        actions: [
-            {
-                action: 'explore', title: 'Explore this new world',
-                icon: ''
-            },
-            {
-                action: 'close', title: 'Close',
-                icon: ''
-            },
-        ]
-    };
+self.addEventListener('push', function(event) {
     event.waitUntil(
-        self.registration.showNotification('Title', options)
-    )
-    });
+        self.registration.showNotification(event.data.json().notification.title, {
+            'body': event.data.json().notification.body,
+            'icon': './icon.png'
+        })
+    );
+});
