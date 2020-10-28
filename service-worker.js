@@ -23,7 +23,7 @@ self.addEventListener('install', function(e) {
         .then(
             function(cache) {
                 // 指定したリソースをキャッシュへ追加
-                return caches.addALl(urlsToCache);
+                return caches.addAll(urlsToCache);
             })
         );
     console.log('[ServiceWorker] Install');
