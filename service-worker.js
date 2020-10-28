@@ -1,12 +1,12 @@
-var CACHE_NAME  = "test-cache-v8-10";
+var CACHE_NAME  = 'test-cache-v8-10';
 var urlsToCache = [
-    "/",
-    "index.html",
-    "p.html",
-    "adpDSC_7090-760x507-1.jpg",
-    "icons/freeicon-192x192.png",
-    "icons/freeicon-512x512.png",
-    "offline.html"
+    '/',
+    'index.html',
+    'p.html',
+    'adpDSC_7090-760x507-1.jpg',
+    'icons/freeicon-192x192.png',
+    'icons/freeicon-512x512.png',
+    'offline.html'
 ];
 // 残したいキャッシュのバージョン
 const CACHE_KEYS = [
@@ -52,7 +52,7 @@ self.addEventListener('fetch', function(event) {
     }
 
     if (online) {
-        console.log("ONLINE");
+        console.log('ONLINE');
         //このパターンの処理では、Responseだけクローンすれば問題ない
         //cloneEventRequest = event.request.clone();
         event.respondWith(
@@ -75,14 +75,14 @@ self.addEventListener('fetch', function(event) {
 
                             if (response) {
                                 if (response || response.status == 200) {
-                                    console.log("正常にリソースを取得");
+                                    console.log('正常にリソースを取得');
                                     caches.open(CACHE_NAME)
                                         .then(function(cache) {
-                                            console.log("キャッシュへ保存");
+                                            console.log('キャッシュへ保存');
                                             //初回表示でエラー起きているが致命的でないので保留
                                             cache.put(event.request, cloneResponse)
                                                 .then(function() {
-                                                    console.log("保存完了");
+                                                    console.log('保存完了');
                                                 });
                                         });
                                 } else {
@@ -96,7 +96,7 @@ self.addEventListener('fetch', function(event) {
                 })
         );
     } else {
-        console.log("OFFLINE");
+        console.log('OFFLINE');
         event.respondWith(
             caches.match(event.request)
             .then(function(response) {
@@ -105,7 +105,7 @@ self.addEventListener('fetch', function(event) {
                     return response;
                 }
                 //オフラインでキャッシュもなかったパターン
-                return caches.match("p.html")
+                return caches.match('p.html')
                     .then(function(responseNodata) {
                         return responseNodata;
                     });
@@ -113,16 +113,16 @@ self.addEventListener('fetch', function(event) {
         );
     }
 });
-self.addEventListener("push", function (event) {
+self.addEventListener('push', function (event) {
   if (event.data) {
      console.log(event.data.text());
   } else {
      console.log('No Data');
   }
 
-  const title ="test";
+  const title ='test';
   const options = {
-    body: "body",
+    body: 'body',
     icon: './icons/freeicon-192.png',
     badge: '',
   };
