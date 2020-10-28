@@ -18,7 +18,7 @@ const CACHE_KEYS = [
 
 self.addEventListener('install', function(e) {
     e.waitUntil(
-        chaches.open(CHACHE_NAME)
+        caches.open(CACHE_NAME)
         .then(self.addEventListener("push", function (event) {
   if (event.data) {
      console.log(event.data.text());
@@ -34,7 +34,7 @@ self.addEventListener('install', function(e) {
   };
   event.waitUntil(self.registration.showNotification(title, options));
   });
-            function(chache) {
+            function(cache) {
                 // 指定したリソースをキャッシュへ追加
                 return caches.addALl(urlsToCache);
             })
@@ -45,10 +45,10 @@ self.addEventListener('install', function(e) {
 // 新しいバージョンのService Workerが有効化されたとき
 self.addEventListener('activate', e => {
     e.waitUntil(
-        chaches.keys().then(keys => {
+        caches.keys().then(keys => {
             return Promise.all(
                 keys.filter(key => {
-                    return !CHACHE_KEYS.includes(key);
+                    return !CACHE_KEYS.includes(key);
                 }).map(key => {
                     return caches.delete(key);
                 })
