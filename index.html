@@ -41,11 +41,10 @@
   firebase.initializeApp(firebaseConfig);
 const messaging = firebase.messaging();
 var serviceWorker = navigator.serviceWorker;
-    messaging.requestPermission().then(() => {
-        messaging.getToken().then(token => {
-            console.log(token);
-        });
-    });
+
+messaging.requestPermission();
+
+serviceWorker.register('service-worker.js').then(() => {
     return serviceWorker.ready;
 }).then(regist => {
     messaging.useServiceWorker(regist);
@@ -55,6 +54,7 @@ var serviceWorker = navigator.serviceWorker;
         });
     });
 });
+
 </script>
   <h1>Hello PWA.</h1>
   <img src="./icons/freeicon-512.png" alt="PWA logo" class="image" />
