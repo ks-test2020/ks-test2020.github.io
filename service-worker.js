@@ -1,4 +1,4 @@
-const CACHE_NAME  = "test-cache-v8-10";
+var CACHE_NAME  = "test-cache-v8-10";
 
 var urlsToCache = [
     "index.html",
@@ -25,23 +25,6 @@ self.addEventListener('install', function(e) {
         );
     console.log('[ServiceWorker] Install');
 });
-
-self.addEventListener("push", function (event) {
-  if (event.data) {
-     console.log(event.data.text());
-  } else {
-     console.log('No Data');
-  }
-
-  const title ="test";
-  const options = {
-    body: "body",
-    icon: './icons/freeicon-192.png',
-    badge: '',
-  };
-
-  event.waitUntil(self.registration.showNotification(title, options));
-  });
 
 // 新しいバージョンのService Workerが有効化されたとき
 self.addEventListener('activate', e => {
