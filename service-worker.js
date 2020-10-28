@@ -1,6 +1,7 @@
 var CACHE_NAME  = "test-cache-v8-10";
 
 var urlsToCache = [
+    "/",
     "index.html",
     "p.html",
     "adpDSC_7090-760x507-1.jpg",
