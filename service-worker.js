@@ -2,9 +2,9 @@ var CACHE_NAME  = 'test-cache-v8-10';
 var urlsToCache = [
     '/',
     'p.html',
-//    'adpDSC_7090-760x507-1.jpg',
-//    'icons/freeicon-192x192.png',
-//    'icons/freeicon-512x512.png',
+    'adpDSC_7090-760x507-1.jpg',
+    'icons/freeicon-192x192.png',
+    'icons/freeicon-512x512.png',
 //    'offline.html'
 ];
 // 残したいキャッシュのバージョン
