@@ -114,20 +114,29 @@ self.addEventListener('fetch', function(event) {
         );
     }
 });
-self.addEventListener('push', function (event) {
-    console.log('Received a push message', event);
-    var title = "プッシュ通知です！";
-    var body = "プッシュ通知はこのようにして送られるのです";
+let baseURL = '/';
+self.addEventListener('push', event => {
+    let json = event.data.json();
+
+    baseURL = json.data.url;
 
     event.waitUntil(
-        self.registration.showNotification(title, {
-            body: body,
-            icon: 'http://free-images.gatag.net/images/201108090000.jpg',
-            tag: 'push-notification-tag'
+        self.registration.showNotification(json.notification.title, {
+            'body': json.notification.body,
+            'tag': 'request',
+            'actions': JSON.parse(json.data.action)
         })
     );
 });
-self.addEventListener('notificationclick', function (event) {
+
+self.addEventListener('notificationclick', event => {
+    if (event.action === 'select-a') {
+        self.clients.openWindow('./index.html');
+    } else if (event.action === 'select-b') {
+        self.clients.openWindow('./p.html');
+    } else {
+        self.clients.openWindow(baseURL);
+    }
+
     event.notification.close();
-    clients.openWindow("/");
-}, false);
+});
