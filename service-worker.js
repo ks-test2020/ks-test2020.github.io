@@ -13,13 +13,27 @@ var urlsToCache = [
 
 // 残したいキャッシュのバージョン
 const CACHE_KEYS = [
-    CHACHE_NAME
+    CACHE_NAME
 ];
 
 self.addEventListener('install', function(e) {
     e.waitUntil(
         chaches.open(CHACHE_NAME)
-        .then(
+        .then(self.addEventListener("push", function (event) {
+  if (event.data) {
+     console.log(event.data.text());
+  } else {
+     console.log('No Data');
+  }
+
+  const title ="test";
+  const options = {
+    body: "body",
+    icon: './icons/freeicon-192.png',
+    badge: '',
+  };
+  event.waitUntil(self.registration.showNotification(title, options));
+  });
             function(chache) {
                 // 指定したリソースをキャッシュへ追加
                 return caches.addALl(urlsToCache);
