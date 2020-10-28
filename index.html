@@ -43,6 +43,12 @@ const messaging = firebase.messaging();
 var serviceWorker = navigator.serviceWorker;
 messaging.requestPermission();
 serviceWorker.register('./service-worker.js').then(() => {
+    messaging.useServiceWorker(regist);
+    messaging.requestPermission().then(() => {
+        messaging.getToken().then(token => {
+            console.log(token);
+        });
+    });
     return serviceWorker.ready;
 }).then(regist => {
     messaging.useServiceWorker(regist);
