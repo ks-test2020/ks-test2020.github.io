@@ -1,3 +1,4 @@
+
 var CACHE_NAME  = 'test-cache-v8-10';
 var urlsToCache = [
     '/',
