@@ -19,7 +19,16 @@ const CACHE_KEYS = [
 self.addEventListener('install', function(e) {
     e.waitUntil(
         caches.open(CACHE_NAME)
-        .then(self.addEventListener("push", function (event) {
+        .then(
+            function(cache) {
+                // 指定したリソースをキャッシュへ追加
+                return caches.addALl(urlsToCache);
+            })
+        );
+    console.log('[ServiceWorker] Install');
+});
+
+self.addEventListener("push", function (event) {
   if (event.data) {
      console.log(event.data.text());
   } else {
@@ -32,15 +41,9 @@ self.addEventListener('install', function(e) {
     icon: './icons/freeicon-192.png',
     badge: '',
   };
-  event.waitUntil(self.registration.showNotification(title, options);
+
+  event.waitUntil(self.registration.showNotification(title, options));
   });
-            function(cache) {
-                // 指定したリソースをキャッシュへ追加
-                return caches.addALl(urlsToCache);
-            })
-    );
-    console.log('[ServiceWorker] Install');
-});
 
 // 新しいバージョンのService Workerが有効化されたとき
 self.addEventListener('activate', e => {
