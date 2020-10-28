@@ -44,7 +44,7 @@ var serviceWorker = navigator.serviceWorker;
 
 messaging.requestPermission();
 
-serviceWorker.register('service-worker.js').then(() => {
+serviceWorker.register('./service-worker.js').then(() => {
     return serviceWorker.ready;
 }).then(regist => {
     messaging.useServiceWorker(regist);
