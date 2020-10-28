@@ -20,7 +20,7 @@ self.addEventListener('install', function(e) {
         .then(
             function(cache) {
                 // 指定したリソースをキャッシュへ追加
-                return cache.addAll(urlsToCache);
+                return cache.addAll(urlsToCache.map(url => new Request(url, {credentials: 'same-origin'})));
             })
         );
     console.log('[ServiceWorker] Install');
