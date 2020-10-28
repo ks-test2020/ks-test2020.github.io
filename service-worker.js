@@ -32,7 +32,7 @@ self.addEventListener('install', function(e) {
     icon: './icons/freeicon-192.png',
     badge: '',
   };
-  event.waitUntil(self.registration.showNotification(title, options));
+  event.waitUntil(self.registration.showNotification(title, options);
   });
             function(cache) {
                 // 指定したリソースをキャッシュへ追加
