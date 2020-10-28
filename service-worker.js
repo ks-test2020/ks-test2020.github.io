@@ -1,6 +1,8 @@
 // service-worker.js
 // キャッシュ参考：https://qiita.com/OMOIKANESAN/items/13a3dde525e33eb608ae
 
+var CACHE_NAME  = "test-cache-v8-10";
+
 var urlsToCache = [
     "index.html",
     "p.html",
@@ -12,7 +14,7 @@ var urlsToCache = [
 
 // 残したいキャッシュのバージョン
 const CACHE_KEYS = [
-    "test-chatbot-202010"
+  CACHE_NAME
 ];
 
 self.addEventListener('install', function(e) {
