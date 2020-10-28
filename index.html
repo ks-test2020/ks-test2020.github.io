@@ -35,5 +35,29 @@
   <h1>Hello PWA.</h1>
   <img src="./icons/freeicon-512.png" alt="PWA logo" class="image" />
   <a href="p.html">p.html</a>
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-analytics.js"></script>
+
+<script>
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  var firebaseConfig = {
+    apiKey: "AIzaSyAY_WM17RYD1wqdsOI77xC-8_jaS4Kx7uc",
+    authDomain: "test-webpush-ae575.firebaseapp.com",
+    databaseURL: "https://test-webpush-ae575.firebaseio.com",
+    projectId: "test-webpush-ae575",
+    storageBucket: "test-webpush-ae575.appspot.com",
+    messagingSenderId: "855008810220",
+    appId: "1:855008810220:web:2835eb7f3799bcb98081c9",
+    measurementId: "G-JFQ3H8J4L2"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  firebase.analytics();
+</script>
 </body>
 </html>
