@@ -19,7 +19,7 @@ self.addEventListener('install', function(e) {
         caches.open(CACHE_NAME)
         .then(
             function(cache) {
-                // 指定したリソースをキャッシュへ追加
+                // 指定したリソースをキャッシュへ追加（以下はAMPにも対応）
                 return cache.addAll(urlsToCache.map(url => new Request(url, {credentials: 'same-origin'})));
             })
         );
