@@ -18,6 +18,23 @@
 var db = firebase.firestore();
 var usersRef = db.collection("users");
 
+// フォアグラウンドでのプッシュ通知受信
+messaging.onMessage(function(payload) {
+    var notificationTitle = payload.data.title; // タイトル
+    var notificationOptions = {
+      body: payload.data.body, // 本文
+      icon: 'https://ks-test2020.github.io/adpDSC_7090-760x507-1.jpg', // アイコン
+      click_action: 'https://ks-test2020.github.io/p.html' // 飛び先URL
+    };
+ 
+    if (!("Notification" in window)) {
+        // ブラウザが通知機能に対応しているかを判定
+    } else if (Notification.permission === "granted") {
+        // 通知許可されていたら通知する
+        var notification = new Notification(notificationTitle,notificationOptions);
+    }
+});
+
 // 購読確認を行う
 checkSubscription();
  
