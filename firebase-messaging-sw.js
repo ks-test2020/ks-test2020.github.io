@@ -18,6 +18,9 @@ const CACHE_KEYS = [
 
   // Initialize Firebase
 firebase.initializeApp({
+    'apiKey': 'AIzaSyAY_WM17RYD1wqdsOI77xC-8_jaS4Kx7uc',
+    'projectId': 'test-webpush-ae575',
+    'appId': "1:855008810220:web:2835eb7f3799bcb98081c9",
     'messagingSenderId': '855008810220'
 });
 
