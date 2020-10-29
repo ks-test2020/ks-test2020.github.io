@@ -4,6 +4,12 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="apple-mobile-web-app-title" content="test">
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<!-- defer: DOMContentLoadedイベントが起きてから呼び出す -->
+<script defer src="https://www.gstatic.com/firebasejs/8.0.0/firebase-app.js"></script>
+<script defer src="https://www.gstatic.com/firebasejs/8.0.0/firebase-messaging.js"></script>
+<script defer src="https://www.gstatic.com/firebasejs/6.2.0/firebase-firestore.js"></script>
+<script defer src="/firebase.js"></script>
   <!-- manifest.jsonを呼び出しています -->
   <link rel="manifest" href="./manifest.json">
   <title>Hello PWA.</title>
@@ -21,127 +27,18 @@
   </style>
 </head>
 <body>
-<!-- The core Firebase JS SDK is always required and must be listed first -->
-<script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-messaging.js"></script>
 
   <h1>Hello PWA.</h1>
   <img src="./icons/freeicon-512.png" alt="PWA logo" class="image" />
   <a href="p.html">p.html</a>
 
-<button id="button" onclick="getSubscription()" class="btn center-block"></button>
-
-<script>
-  // Your web app's Firebase configuration
-  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-  var firebaseConfig = {
-    apiKey: "AIzaSyAY_WM17RYD1wqdsOI77xC-8_jaS4Kx7uc",
-    authDomain: "test-webpush-ae575.firebaseapp.com",
-    databaseURL: "https://test-webpush-ae575.firebaseio.com",
-    projectId: "test-webpush-ae575",
-    storageBucket: "test-webpush-ae575.appspot.com",
-    messagingSenderId: "855008810220",
-    appId: "1:855008810220:web:2835eb7f3799bcb98081c9",
-    measurementId: "G-JFQ3H8J4L2"
-  };
-  // Initialize Firebase
-  firebase.initializeApp(firebaseConfig);
-  const messaging = firebase.messaging();
-  messaging.usePublicVapidKey("BCdd5izfiIH5187pj6xbN5Deo-u-jLaahZ3bXqHT_NCiIwbCc5lhvo5i9FufXynJaEixMUoIEu4uZpvB45kfq7I");
-
-    initialButton();
-
-    function initialButton() {
-      messaging.getToken().then(token => {
-        if (token) {
-          document.getElementById("button").innerText = "プッシュ通知を購読中";
-        } else {
-          document.getElementById("button").innerText = "プッシュ通知を受け取る";
-        }
-      }).catch(function (err) {
-        console.log('An error occurred while retrieving token. ', err);
-      });
-    }
-
-// すでに購読済みの場合、取得済みのFirebase用トークンを表示
-
-    function getSubscription() {
-      messaging.getToken().then(token => {
-        if (!token) {
-          getNotification();
-        } else {
-          displayToken();
-        }
-      }).catch(function (err) {
-        console.log('An error occurred while retrieving token. ', err);
-      });
-    }
-
-//  Firebase のSDKを使い、プッシュ通知の購読処理を行う
-
-    function getNotification() {
-      messaging.requestPermission().then(function () {
-        console.log('Notification permission granted.');
-        displayToken();
-        initialButton();
-      }).catch(function (err) {
-        console.log('Unable to get permission to notify.', err);
-      });
-    }
-
-//　トークン表示
-
-    function displayToken() {
-      messaging.getToken().then(token => {
-        if (token) {
-          console.log(token);
-        } else {
-          console.log('No Instance ID token available. Request permission to generate one.');
-        }
-      }).catch(function (err) {
-        console.log('An error occurred while retrieving token. ', err);
-      });
-    }
-
-//　Service Worker ファイルを登録
-var workerFileName = 'firebase-messaging-sw.js';
-navigator.serviceWorker.register(workerFileName, {scope: "/"})
-    .then(
-    function (reg) {
-        var serviceWorker;
-        if (reg.installing) {
-            serviceWorker = reg.installing;
-            // console.log('Service worker installing');
-        } else if (reg.waiting) {
-            serviceWorker = reg.waiting;
-            // console.log('Service worker installed & waiting');
-        } else if (reg.active) {
-            serviceWorker = reg.active;
-            // console.log('Service worker active');
-        }
-
-        if (serviceWorker) {
-            console.log("sw current state", serviceWorker.state);
-            if (serviceWorker.state == "activated") {
-                //If push subscription wasnt done yet have to do here
-                console.log("sw already activated - Do watever needed here");
-            }
-            serviceWorker.addEventListener("statechange", function(e) {
-                console.log("sw statechange : ", e.target.state);
-                if (e.target.state == "activated") {
-                    // use pushManger for subscribing here.
-                    console.log("Just now activated. now we can subscribe for push notification")
-                    subscribeForPushNotification(reg);
-                }
-            });
-        }
-    },
-    function (err) {
-        console.error('unsuccessful registration with ', workerFileName, err);
-    }
-);
-
-</script>
+<div id="notification">
+    <h3>NOTIFICATION</h3>
+    <p>当サイトの更新をプッシュ通知で受け取ることができます。</p>
+    <p class="notice"></p>
+    <button id="EntryButton" onclick="getSubscription()">プッシュ通知を受け取る</button>
+    <button id="RemoveButton" onclick="removeSubscription()">プッシュ通知を解除する</button>
+</div>
 
 </body>
 </html>
