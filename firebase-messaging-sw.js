@@ -11,7 +11,7 @@ var urlsToCache = [
     'icons/freeicon-512x512.png',
 //    'offline.html'
 ];
-// c‚µ‚½‚¢ƒLƒƒƒbƒVƒ…‚Ìƒo[ƒWƒ‡ƒ“
+// æ®‹ã—ãŸã„ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã®ãƒãƒ¼ã‚¸ãƒ§ãƒ³
 const CACHE_KEYS = [
   CACHE_NAME
 ];
@@ -27,14 +27,14 @@ self.addEventListener('install', function(e) {
         caches.open(CACHE_NAME)
         .then(
             function(cache) {
-                // w’è‚µ‚½ƒŠƒ\[ƒX‚ğƒLƒƒƒbƒVƒ…‚Ö’Ç‰ÁiˆÈ‰º‚ÍAMP‚É‚à‘Î‰j
+                // æŒ‡å®šã—ãŸãƒªã‚½ãƒ¼ã‚¹ã‚’ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã¸è¿½åŠ ï¼ˆä»¥ä¸‹ã¯AMPã«ã‚‚å¯¾å¿œï¼‰
                 return cache.addAll(urlsToCache.map(url => new Request(url, {credentials: 'same-origin'})));
             })
         );
     console.log('[ServiceWorker] Install');
 });
 
-// V‚µ‚¢ƒo[ƒWƒ‡ƒ“‚ÌService Worker‚ª—LŒø‰»‚³‚ê‚½‚Æ‚«
+// æ–°ã—ã„ãƒãƒ¼ã‚¸ãƒ§ãƒ³ã®Service WorkerãŒæœ‰åŠ¹åŒ–ã•ã‚ŒãŸã¨ã
 self.addEventListener('activate', e => {
     e.waitUntil(
         caches.keys().then(keys => {
@@ -50,52 +50,52 @@ self.addEventListener('activate', e => {
     console.log('[ServiceWorker] Activate');
 });
 
-// Œ»ó‚Å‚ÍA‚±‚Ìˆ—‚ğ‘‚©‚È‚¢‚ÆService Worker‚ª—LŒø‚Æ”»’è‚³‚ê‚È‚¢‚æ‚¤‚Å‚·
+// ç¾çŠ¶ã§ã¯ã€ã“ã®å‡¦ç†ã‚’æ›¸ã‹ãªã„ã¨Service WorkerãŒæœ‰åŠ¹ã¨åˆ¤å®šã•ã‚Œãªã„ã‚ˆã†ã§ã™
 self.addEventListener('fetch', function(event) {
-    // window.navifatoriƒ†[ƒU[ƒG[ƒWƒFƒ“ƒg‚Ìó‘Ô‚âgŒ³î•ñ‚ğ•\‚µ‚Ü‚·j
+    // window.navifatorï¼ˆãƒ¦ãƒ¼ã‚¶ãƒ¼ã‚¨ãƒ¼ã‚¸ã‚§ãƒ³ãƒˆã®çŠ¶æ…‹ã‚„èº«å…ƒæƒ…å ±ã‚’è¡¨ã—ã¾ã™ï¼‰
     var online = navigator.onLine;
 
-    // ƒtƒ@ƒCƒ‹ƒpƒX ~/test.html‚ÉƒAƒNƒZƒX‚·‚é‚ÆA‚±‚Ìƒtƒ@ƒCƒ‹©‘Ì‚Í–³‚¢‚ªServiceWorker‚ªResponse‚ğì¬‚µ‚Ä•\¦‚µ‚Ä‚­‚ê‚é
+    // ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹ ~/test.htmlã«ã‚¢ã‚¯ã‚»ã‚¹ã™ã‚‹ã¨ã€ã“ã®ãƒ•ã‚¡ã‚¤ãƒ«è‡ªä½“ã¯ç„¡ã„ãŒServiceWorkerãŒResponseã‚’ä½œæˆã—ã¦è¡¨ç¤ºã—ã¦ãã‚Œã‚‹
     if (event.request.url.indexOf('test.html') != -1) {
-        return event.respondWith(new Response('”CˆÓ‚ÌURL‚Ì“à—e‚ğ‚±‚±‚Å©—R‚É•Ô‹p‚Å‚«‚é'));
+        return event.respondWith(new Response('ä»»æ„ã®URLã®å†…å®¹ã‚’ã“ã“ã§è‡ªç”±ã«è¿”å´ã§ãã‚‹'));
     }
 
     if (online) {
         console.log('ONLINE');
-        //‚±‚Ìƒpƒ^[ƒ“‚Ìˆ—‚Å‚ÍAResponse‚¾‚¯ƒNƒ[ƒ“‚·‚ê‚Î–â‘è‚È‚¢
+        //ã“ã®ãƒ‘ã‚¿ãƒ¼ãƒ³ã®å‡¦ç†ã§ã¯ã€Responseã ã‘ã‚¯ãƒ­ãƒ¼ãƒ³ã™ã‚Œã°å•é¡Œãªã„
         //cloneEventRequest = event.request.clone();
         event.respondWith(
             caches.match(event.request)
             .then(
                 function(response) {
                     if (response) {
-                        //ƒIƒ“ƒ‰ƒCƒ“‚Å‚àƒ[ƒJƒ‹‚ÉƒLƒƒƒbƒVƒ…‚ÅƒŠƒ\[ƒX‚ª‚ ‚ê‚Î‚»‚ê‚ğ•Ô‚·
-                        //‚±‚±‚ğ–³Œø‚É‚·‚ê‚ÎƒIƒ“ƒ‰ƒCƒ“‚Ì‚Æ‚«‚Íí‚ÉƒIƒ“ƒ‰ƒCƒ“ƒŠƒ\[ƒX‚ğæ‚è‚És‚«A‚»‚ÌÅV”Å‚ğƒLƒƒƒbƒVƒ…‚ÉPUT‚·‚é
+                        //ã‚ªãƒ³ãƒ©ã‚¤ãƒ³ã§ã‚‚ãƒ­ãƒ¼ã‚«ãƒ«ã«ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã§ãƒªã‚½ãƒ¼ã‚¹ãŒã‚ã‚Œã°ãã‚Œã‚’è¿”ã™
+                        //ã“ã“ã‚’ç„¡åŠ¹ã«ã™ã‚Œã°ã‚ªãƒ³ãƒ©ã‚¤ãƒ³ã®ã¨ãã¯å¸¸ã«ã‚ªãƒ³ãƒ©ã‚¤ãƒ³ãƒªã‚½ãƒ¼ã‚¹ã‚’å–ã‚Šã«è¡Œãã€ãã®æœ€æ–°ç‰ˆã‚’ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã«PUTã™ã‚‹
                         return response;
                     }
                     //request streem 1
                     return fetch(event.request)
                         .then(function(response) {
-                            //ƒ[ƒJƒ‹ƒLƒƒƒbƒVƒ…‚É‚È‚©‚Á‚½‚©‚çƒlƒbƒgƒ[ƒN‚©‚ç—‚Æ‚·
-                            //ƒlƒbƒgƒ[ƒN‚©‚ç—‚Æ‚¹‚Ä‚ê‚Î‚±‚±‚ÅƒŠƒ\[ƒX‚ª•Ô‚³‚ê‚é
+                            //ãƒ­ãƒ¼ã‚«ãƒ«ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã«ãªã‹ã£ãŸã‹ã‚‰ãƒãƒƒãƒˆãƒ¯ãƒ¼ã‚¯ã‹ã‚‰è½ã¨ã™
+                            //ãƒãƒƒãƒˆãƒ¯ãƒ¼ã‚¯ã‹ã‚‰è½ã¨ã›ã¦ã‚Œã°ã“ã“ã§ãƒªã‚½ãƒ¼ã‚¹ãŒè¿”ã•ã‚Œã‚‹
 
-                            // Response‚ÍƒXƒgƒŠ[ƒ€‚È‚Ì‚ÅƒLƒƒƒbƒVƒ…‚Åg—p‚µ‚Ä‚µ‚Ü‚¤‚ÆAƒuƒ‰ƒEƒU‚Ì•\¦‚Å•s‹ï‡‚ª‹N‚±‚é(‚Á‚Û‚¢)‚Ì‚ÅA•¡»‚µ‚½‚à‚Ì‚ğg‚¤
+                            // Responseã¯ã‚¹ãƒˆãƒªãƒ¼ãƒ ãªã®ã§ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã§ä½¿ç”¨ã—ã¦ã—ã¾ã†ã¨ã€ãƒ–ãƒ©ã‚¦ã‚¶ã®è¡¨ç¤ºã§ä¸å…·åˆãŒèµ·ã“ã‚‹(ã£ã½ã„)ã®ã§ã€è¤‡è£½ã—ãŸã‚‚ã®ã‚’ä½¿ã†
                             cloneResponse = response.clone();
 
                             if (response) {
                                 if (response || response.status == 200) {
-                                    console.log('³í‚ÉƒŠƒ\[ƒX‚ğæ“¾');
+                                    console.log('æ­£å¸¸ã«ãƒªã‚½ãƒ¼ã‚¹ã‚’å–å¾—');
                                     caches.open(CACHE_NAME)
                                         .then(function(cache) {
-                                            console.log('ƒLƒƒƒbƒVƒ…‚Ö•Û‘¶');
-                                            //‰‰ñ•\¦‚ÅƒGƒ‰[‹N‚«‚Ä‚¢‚é‚ª’v–½“I‚Å‚È‚¢‚Ì‚Å•Û—¯
+                                            console.log('ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã¸ä¿å­˜');
+                                            //åˆå›è¡¨ç¤ºã§ã‚¨ãƒ©ãƒ¼èµ·ãã¦ã„ã‚‹ãŒè‡´å‘½çš„ã§ãªã„ã®ã§ä¿ç•™
                                             cache.put(event.request, cloneResponse)
                                                 .then(function() {
-                                                    console.log('•Û‘¶Š®—¹');
+                                                    console.log('ä¿å­˜å®Œäº†');
                                                 });
                                         });
                                 } else {
-                                    return event.respondWith(new Response('200ˆÈŠO‚ÌƒGƒ‰['));
+                                    return event.respondWith(new Response('200ä»¥å¤–ã®ã‚¨ãƒ©ãƒ¼'));
                                 }
                                 return response;
                             }
@@ -109,11 +109,11 @@ self.addEventListener('fetch', function(event) {
         event.respondWith(
             caches.match(event.request)
             .then(function(response) {
-                // ƒLƒƒƒbƒVƒ…‚ª‚ ‚Á‚½‚Ì‚Å‚»‚ÌƒŒƒXƒ|ƒ“ƒX‚ğ•Ô‚·
+                // ã‚­ãƒ£ãƒƒã‚·ãƒ¥ãŒã‚ã£ãŸã®ã§ãã®ãƒ¬ã‚¹ãƒãƒ³ã‚¹ã‚’è¿”ã™
                 if (response) {
                     return response;
                 }
-                //ƒIƒtƒ‰ƒCƒ“‚ÅƒLƒƒƒbƒVƒ…‚à‚È‚©‚Á‚½ƒpƒ^[ƒ“
+                //ã‚ªãƒ•ãƒ©ã‚¤ãƒ³ã§ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã‚‚ãªã‹ã£ãŸãƒ‘ã‚¿ãƒ¼ãƒ³
                 return caches.match('p.html')
                     .then(function(responseNodata) {
                         return responseNodata;
