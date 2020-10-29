@@ -20,7 +20,6 @@ const CACHE_KEYS = [
 firebase.initializeApp({
     'messagingSenderId': '855008810220'
 });
-  firebase.initializeApp(firebaseConfig);
 
 const messaging = firebase.messaging();
 
