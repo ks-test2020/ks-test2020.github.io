@@ -16,9 +16,18 @@ const CACHE_KEYS = [
   CACHE_NAME
 ];
 
-firebase.initializeApp({
-  'messagingSenderId': '855008810220'
-});
+  var firebaseConfig = {
+    apiKey: "AIzaSyAY_WM17RYD1wqdsOI77xC-8_jaS4Kx7uc",
+    authDomain: "test-webpush-ae575.firebaseapp.com",
+    databaseURL: "https://test-webpush-ae575.firebaseio.com",
+    projectId: "test-webpush-ae575",
+    storageBucket: "test-webpush-ae575.appspot.com",
+    messagingSenderId: "855008810220",
+    appId: "1:855008810220:web:2835eb7f3799bcb98081c9",
+    measurementId: "G-JFQ3H8J4L2"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
 
 const messaging = firebase.messaging();
 
