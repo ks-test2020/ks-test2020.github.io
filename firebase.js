@@ -19,7 +19,7 @@ var db = firebase.firestore();
 var usersRef = db.collection("users");
 
 // 購読確認を行う
-checkSubscription();
+//checkSubscription();
  
 // 購読確認処理
 function checkSubscription() {
