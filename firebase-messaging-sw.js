@@ -1,15 +1,17 @@
 var CACHE_NAME  = 'test-cache-v8-10';
+const VERSION = "1";
+const ORIGIN = location.protocol + '//' + location.hostname;
+
 var urlsToCache = [
-    '/',
-    'p.html',
-    'adpDSC_7090-760x507-1.jpg',
-    'icons/freeicon-192x192.png',
-    'icons/freeicon-512x512.png'
-//    'offline.html'
+    ORIGIN + '/',
+    ORIGIN + 'p.html',
+    ORIGIN + 'adpDSC_7090-760x507-1.jpg',
+    ORIGIN + 'icons/freeicon-192x192.png',
+    ORIGIN + 'icons/freeicon-512x512.png',
 ];
 // 残したいキャッシュのバージョン
 const CACHE_KEYS = [
-  CACHE_NAME
+  CACHE_KEY
 ];
 
 importScripts('https://www.gstatic.com/firebasejs/8.0.0/firebase-app.js');
@@ -29,105 +31,76 @@ firebase.initializeApp({
 
 const messaging = firebase.messaging();
 
-self.addEventListener('install', function(e) {
-    e.waitUntil(
-        caches.open(CACHE_NAME)
-        .then(
-            function(cache) {
-                // 指定したリソースをキャッシュへ追加（以下はAMPにも対応）
-                return cache.addAll(urlsToCache.map(url => new Request(url, {credentials: 'same-origin'})));
-            })
-        );
-    console.log('[ServiceWorker] Install');
-});
-
-// 新しいバージョンのService Workerが有効化されたとき
-self.addEventListener('activate', e => {
-    e.waitUntil(
-        caches.keys().then(keys => {
+self.addEventListener('install', event => {
+    event.waitUntil(
+        caches.open(CACHE_KEY).then(cache => {
             return Promise.all(
-                keys.filter(key => {
-                    return !CACHE_KEYS.includes(key);
-                }).map(key => {
-                    return caches.delete(key);
+                STATIC_FILES.map(url => {
+                    return fetch(new Request(url, { cache: 'no-cache', mode: 'no-cors' })).then(response => {
+                    return cache.put(url, response);
+                    });
                 })
             );
         })
     );
-    console.log('[ServiceWorker] Activate');
 });
-
-// 現状では、この処理を書かないとService Workerが有効と判定されないようです
-self.addEventListener('fetch', function(event) {
-    // window.navifator（ユーザーエージェントの状態や身元情報を表します）
-    var online = navigator.onLine;
-
-    // ファイルパス ~/test.htmlにアクセスすると、このファイル自体は無いがServiceWorkerがResponseを作成して表示してくれる
-    if (event.request.url.indexOf('test.html') != -1) {
-        return event.respondWith(new Response('任意のURLの内容をここで自由に返却できる'));
+ 
+self.addEventListener('activate', event => {
+    event.waitUntil(
+        caches.keys().then((cacheNames) => {
+            return cacheNames.filter((cacheName) => {
+                // CACHE_KEYではないキャッシュを探す
+                return cacheName !== CACHE_KEY;
+            });
+            }).then((cachesToDelete) => {
+            return Promise.all(cachesToDelete.map((cacheName) => {
+                // いらないキャッシュを削除する
+                return caches.delete(cacheName);
+            }));
+        })
+    );
+});
+ 
+self.addEventListener('fetch', event => {
+    // POSTの場合はキャッシュを使用しない
+    if ('POST' === event.request.method) {
+        return;
     }
-
-    if (online) {
-        console.log('ONLINE');
-        //このパターンの処理では、Responseだけクローンすれば問題ない
-        //cloneEventRequest = event.request.clone();
-        event.respondWith(
-            caches.match(event.request)
-            .then(
-                function(response) {
-                    if (response) {
-                        //オンラインでもローカルにキャッシュでリソースがあればそれを返す
-                        //ここを無効にすればオンラインのときは常にオンラインリソースを取りに行き、その最新版をキャッシュにPUTする
-                        return response;
-                    }
-                    //request streem 1
-                    return fetch(event.request)
-                        .then(function(response) {
-                            //ローカルキャッシュになかったからネットワークから落とす
-                            //ネットワークから落とせてればここでリソースが返される
-
-                            // Responseはストリームなのでキャッシュで使用してしまうと、ブラウザの表示で不具合が起こる(っぽい)ので、複製したものを使う
-                            cloneResponse = response.clone();
-
-                            if (response) {
-                                if (response || response.status == 200) {
-                                    console.log('正常にリソースを取得');
-                                    caches.open(CACHE_NAME)
-                                        .then(function(cache) {
-                                            console.log('キャッシュへ保存');
-                                            //初回表示でエラー起きているが致命的でないので保留
-                                            cache.put(event.request, cloneResponse)
-                                                .then(function() {
-                                                    console.log('保存完了');
-                                                });
-                                        });
-                                } else {
-                                    return event.respondWith(new Response('200以外のエラー'));
-                                }
-                                return response;
-                            }
-                        }).catch(function(error) {
-                            return console.log(error);
-                        });
-                })
-        );
-    } else {
-        console.log('OFFLINE');
-        event.respondWith(
-            caches.match(event.request)
-            .then(function(response) {
-                // キャッシュがあったのでそのレスポンスを返す
-                if (response) {
+ 
+    event.respondWith(
+        caches.match(event.request)
+        .then((response) => {
+            // キャッシュ内に該当レスポンスがあれば、それを返す
+            if (response) {
+                return response;
+            }
+ 
+          // 重要：リクエストを clone する。リクエストは Stream なので
+          // 一度しか処理できない。ここではキャッシュ用、fetch 用と2回
+          // 必要なので、リクエストは clone しないといけない
+            let fetchRequest = event.request.clone();
+ 
+            return fetch(fetchRequest)
+            .then((response) => {
+                if (!response || response.status !== 200 || response.type !== 'basic') {
+                    // キャッシュする必要のないタイプのレスポンスならそのまま返す
                     return response;
                 }
-                //オフラインでキャッシュもなかったパターン
-                return caches.match('p.html')
-                    .then(function(responseNodata) {
-                        return responseNodata;
-                    });
-            })
-        );
-    }
+ 
+                // 重要：レスポンスを clone する。レスポンスは Stream で
+                // ブラウザ用とキャッシュ用の2回必要。なので clone して
+                // 2つの Stream があるようにする
+                let responseToCache = response.clone();
+ 
+                caches.open(CACHE_KEY)
+                .then((cache) => {
+                    cache.put(event.request, responseToCache);
+                });
+ 
+                return response;
+            });
+        })
+    );
 });
 
 // バックグラウンドでのプッシュ通知受信
