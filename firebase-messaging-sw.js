@@ -4,10 +4,10 @@ const ORIGIN = location.protocol + '//' + location.hostname;
 
 const STATIC_FILES = [
     ORIGIN + '/',
-    ORIGIN + 'p.html',
-    ORIGIN + 'adpDSC_7090-760x507-1.jpg',
-    ORIGIN + 'icons/freeicon-192x192.png',
-    ORIGIN + 'icons/freeicon-512x512.png',
+    ORIGIN + '/p.html',
+    ORIGIN + '/adpDSC_7090-760x507-1.jpg',
+    ORIGIN + '/icons/freeicon-192x192.png',
+    ORIGIN + '/icons/freeicon-512x512.png',
 ];
 // 残したいキャッシュのバージョン
 const CACHE_KEYS = [
