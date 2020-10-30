@@ -42,7 +42,7 @@ var usersRef = db.collection("users");
     // [START get_token]
     // Get registration token. Initially this makes a network call, once retrieved
     // subsequent calls to getToken will return from cache.
-    messaging.getToken({vapidKey: 'BCdd5izfiIH5187pj6xbN5Deo-u-jLaahZ3bXqHT_NCiIwbCc5lhvo5i9FufXynJaEixMUoIEu4uZpvB45kfq7I'}).then((currentToken) => {
+    messaging.getToken({vapidKey: 'BMY_NVegoHPQFjuFTzJ4uwI0x3hooR7Ku7N_Y3qR6wUhoeCebbpgPWazWE39RIJcjwC3GSo7rp_ahpbRr0bECM0'}).then((currentToken) => {
       if (currentToken) {
         sendTokenToServer(currentToken);
         updateUIForPushEnabled(currentToken);
@@ -182,7 +182,7 @@ function checkSubscription() {
     //通知の承認を確認
     messaging.requestPermission().then(function() {
         //トークンを確認
-        messaging.getToken({vapidKey: 'BCdd5izfiIH5187pj6xbN5Deo-u-jLaahZ3bXqHT_NCiIwbCc5lhvo5i9FufXynJaEixMUoIEu4uZpvB45kfq7I'}).then(function(token) {
+        messaging.getToken({vapidKey: 'BMY_NVegoHPQFjuFTzJ4uwI0x3hooR7Ku7N_Y3qR6wUhoeCebbpgPWazWE39RIJcjwC3GSo7rp_ahpbRr0bECM0'}).then(function(token) {
             //トークン発行
             if (token) {
                 //トークンがDBに入っているか確認
@@ -231,9 +231,9 @@ function checkSubscription() {
 function getSubscription() {
     //通知の承認を確認
   messaging.requestPermission().then(function() {
-console.log(messaging.getToken({vapidKey: 'BCdd5izfiIH5187pj6xbN5Deo-u-jLaahZ3bXqHT_NCiIwbCc5lhvo5i9FufXynJaEixMUoIEu4uZpvB45kfq7I'}));
+console.log(messaging.getToken({vapidKey: 'BMY_NVegoHPQFjuFTzJ4uwI0x3hooR7Ku7N_Y3qR6wUhoeCebbpgPWazWE39RIJcjwC3GSo7rp_ahpbRr0bECM0'}));
         //トークンを確認
-        messaging.getToken({vapidKey: 'BCdd5izfiIH5187pj6xbN5Deo-u-jLaahZ3bXqHT_NCiIwbCc5lhvo5i9FufXynJaEixMUoIEu4uZpvB45kfq7I'}).then(function(token) {
+        messaging.getToken({vapidKey: 'BMY_NVegoHPQFjuFTzJ4uwI0x3hooR7Ku7N_Y3qR6wUhoeCebbpgPWazWE39RIJcjwC3GSo7rp_ahpbRr0bECM0'}).then(function(token) {
             //トークン発行
             if (token) {
                 //トークンがDBに入っているか確認
@@ -281,7 +281,7 @@ function removeSubscription() {
     //通知の承認を確認
     messaging.requestPermission().then(function() {
         //トークンを確認
-        messaging.getToken({vapidKey: 'BCdd5izfiIH5187pj6xbN5Deo-u-jLaahZ3bXqHT_NCiIwbCc5lhvo5i9FufXynJaEixMUoIEu4uZpvB45kfq7I'}).then(function(token) {
+        messaging.getToken({vapidKey: 'BMY_NVegoHPQFjuFTzJ4uwI0x3hooR7Ku7N_Y3qR6wUhoeCebbpgPWazWE39RIJcjwC3GSo7rp_ahpbRr0bECM0'}).then(function(token) {
             //トークン発行
             if (token) {
                 //トークンがDBに入っているか確認
@@ -324,7 +324,7 @@ function removeSubscription() {
  
 //　トークン表示
 function displayToken() {
-  messaging.getToken({vapidKey: 'BCdd5izfiIH5187pj6xbN5Deo-u-jLaahZ3bXqHT_NCiIwbCc5lhvo5i9FufXynJaEixMUoIEu4uZpvB45kfq7I'}).then(token => {
+  messaging.getToken({vapidKey: 'BMY_NVegoHPQFjuFTzJ4uwI0x3hooR7Ku7N_Y3qR6wUhoeCebbpgPWazWE39RIJcjwC3GSo7rp_ahpbRr0bECM0'}).then(token => {
         if (token) {
             console.log(token);
         } else {
