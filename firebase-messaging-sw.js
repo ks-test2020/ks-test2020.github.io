@@ -103,6 +103,17 @@ self.addEventListener('fetch', event => {
     );
 });
 
+// フォアグラウンドでのプッシュ通知受信
+self.addEventListener("push", function(event){
+  const title = "Notification";
+  const options = {
+    body: "通知しました",
+    icon: 'https://ks-test2020.github.io/adpDSC_7090-760x507-1.jpg', // アイコン
+    badge: ""
+ };
+ event.waitUntil(self.registration.showNotification(title, options));
+});
+
 // バックグラウンドでのプッシュ通知受信
 messaging.setBackgroundMessageHandler(function(payload) {
     console.log('[firebase-messaging-sw.js] Received background message ', payload);
@@ -113,6 +124,7 @@ messaging.setBackgroundMessageHandler(function(payload) {
             icon: payload.notification.icon, // アイコン
     };
  
-    self.registration.showNotification(notificationTitle,
-    notificationOptions);
+    return self.registration.showNotification(
+      notificationTitle,
+      notificationOptions);
 });

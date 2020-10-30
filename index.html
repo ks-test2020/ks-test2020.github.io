@@ -420,8 +420,8 @@ function ShowRemoveButton() {
     $('#RemoveButton').show();
 }
 
-// フォアグラウンドでのプッシュ通知受信
-messaging.onMessage(function(payload) {
+messaging.onMessage((payload) => {
+   appendMessage(payload);
     var notificationTitle = payload.data.title; // タイトル
     var notificationOptions = {
       body: payload.data.body, // 本文
