@@ -1,8 +1,8 @@
-var CACHE_KEY  = 'test-cache-v8-10';
-const VERSION = "1";
+const VERSION = "v1";
+var CACHE_KEY  = 'test-cache-' + VERSION;
 const ORIGIN = location.protocol + '//' + location.hostname;
 
-var urlsToCache = [
+const STATIC_FILES = [
     ORIGIN + '/',
     ORIGIN + 'p.html',
     ORIGIN + 'adpDSC_7090-760x507-1.jpg',
