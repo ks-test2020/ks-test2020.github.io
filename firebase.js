@@ -28,6 +28,7 @@ messaging.onMessage(function(payload) {
     };
  
     if (!("Notification" in window)) {
+       console.log("通知機能に対応していません");
         // ブラウザが通知機能に対応しているかを判定
     } else if (Notification.permission === "granted") {
         // 通知許可されていたら通知する

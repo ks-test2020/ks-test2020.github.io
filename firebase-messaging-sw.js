@@ -1,5 +1,5 @@
-importScripts('https://www.gstatic.com/firebasejs/6.2.0/firebase-app.js');
-importScripts('https://www.gstatic.com/firebasejs/6.2.0/firebase-messaging.js');
+importScripts('https://www.gstatic.com/firebasejs/8.0.0/firebase-app.js');
+importScripts('https://www.gstatic.com/firebasejs/8.0.0/firebase-messaging.js');
 
 var CACHE_NAME  = 'test-cache-v8-10';
 var urlsToCache = [
@@ -18,9 +18,13 @@ const CACHE_KEYS = [
   // Initialize Firebase
 firebase.initializeApp({
     'apiKey': 'AIzaSyAY_WM17RYD1wqdsOI77xC-8_jaS4Kx7uc',
+    'authDomain': 'test-webpush-ae575.firebaseapp.com',
+    'databaseURL': 'https://test-webpush-ae575.firebaseio.com',
     'projectId': 'test-webpush-ae575',
-    'appId': "1:855008810220:web:2835eb7f3799bcb98081c9",
-    'messagingSenderId': '855008810220'
+    'storageBucket': 'test-webpush-ae575.appspot.com',
+    'messagingSenderId': '855008810220',
+    'appId': '1:855008810220:web:2835eb7f3799bcb98081c9',
+    'measurementId': 'G-JFQ3H8J4L2'
 });
 
 const messaging = firebase.messaging();
