@@ -1,4 +1,4 @@
-var CACHE_NAME  = 'test-cache-v8-10';
+var CACHE_KEY  = 'test-cache-v8-10';
 const VERSION = "1";
 const ORIGIN = location.protocol + '//' + location.hostname;
 
