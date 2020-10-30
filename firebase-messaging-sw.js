@@ -1,6 +1,3 @@
-importScripts('https://www.gstatic.com/firebasejs/8.0.0/firebase-app.js');
-importScripts('https://www.gstatic.com/firebasejs/8.0.0/firebase-messaging.js');
-
 var CACHE_NAME  = 'test-cache-v8-10';
 var urlsToCache = [
     '/',
@@ -14,6 +11,9 @@ var urlsToCache = [
 const CACHE_KEYS = [
   CACHE_NAME
 ];
+
+importScripts('https://www.gstatic.com/firebasejs/8.0.0/firebase-app.js');
+importScripts('https://www.gstatic.com/firebasejs/8.0.0/firebase-messaging.js');
 
   // Initialize Firebase
 firebase.initializeApp({
